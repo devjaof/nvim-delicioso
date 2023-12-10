@@ -45,4 +45,8 @@ vim.api.nvim_create_autocmd('LspAttach', {
 lspconfig.tsserver.setup({capabilities = lsp_capabilities, filetypes = { "typescript", "typescriptreact", "typescript.tsx", "javascript", "javascriptreact", "javascript.jsx" }})
 lspconfig.eslint.setup({capabilities = lsp_capabilities})
 
-
+vim.api.nvim_create_autocmd('BufWritePre', {
+  pattern = { '*.tsx', '*.ts', '*.jsx', '*.js' },
+  command = 'silent! EslintFixAll',
+  group = vim.api.nvim_create_augroup('MyAutocmdsJavaScripFormatting', {}),
+})
