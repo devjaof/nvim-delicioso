@@ -48,6 +48,7 @@ return require('packer').startup(function(use)
 	}
 
   use {"tpope/vim-commentary"}
-  use{'mg979/vim-visual-multi' }
+  use {"lukas-reineke/indent-blankline.nvim"}
+  use {'mg979/vim-visual-multi'}
 	use { "williamboman/mason.nvim" }
 end)
