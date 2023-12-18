@@ -51,5 +51,6 @@ return require('packer').startup(function(use)
   use {'lukas-reineke/indent-blankline.nvim'}
   use {'mg979/vim-visual-multi'}
 	use { 'williamboman/mason.nvim' }
+  use {'airblade/vim-gitgutter'}
   use {'windwp/nvim-autopairs'}
 end)
