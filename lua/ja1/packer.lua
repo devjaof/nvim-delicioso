@@ -23,10 +23,10 @@ return require('packer').startup(function(use)
 	use('mbbill/undotree')
 
 	use({
-    		"kdheepak/lazygit.nvim",
+    		'kdheepak/lazygit.nvim',
     		-- optional for floating window border decoration
     		requires = {
-        		"nvim-lua/plenary.nvim",
+        		'nvim-lua/plenary.nvim',
     		},
 	})
 
@@ -47,9 +47,9 @@ return require('packer').startup(function(use)
 	  }
 	}
 
-  use {"tpope/vim-commentary"}
-  use {"lukas-reineke/indent-blankline.nvim"}
+  use {'tpope/vim-commentary'}
+  use {'lukas-reineke/indent-blankline.nvim'}
   use {'mg979/vim-visual-multi'}
-	use { "williamboman/mason.nvim" }
-  use {"windwp/nvim-autopairs"}
+	use { 'williamboman/mason.nvim' }
+  use {'windwp/nvim-autopairs'}
 end)
