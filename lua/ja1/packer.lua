@@ -35,8 +35,8 @@ return require('packer').startup(function(use)
 	  branch = 'v3.x',
 	  requires = {
 	    --- Uncomment these if you want to manage LSP servers from neovim
-	    -- {'williamboman/mason.nvim'},
-	    -- {'williamboman/mason-lspconfig.nvim'},
+	    {'williamboman/mason.nvim'},
+	    {'williamboman/mason-lspconfig.nvim'},
 
 	    -- LSP Support
 	    {'neovim/nvim-lspconfig'},
@@ -54,4 +54,10 @@ return require('packer').startup(function(use)
   use {'airblade/vim-gitgutter'}
   use {'editorconfig/editorconfig-vim'}
   use {'windwp/nvim-autopairs'}
+  use {'APZelos/blamer.nvim', config = function ()
+    vim.g.blamer_enabled = true
+    vim.g.blamer_show_in_insert_modes = 0
+    vim.g.blamer_prefix = ' > '
+  end}
+  use {'github/copilot.vim'}
 end)
