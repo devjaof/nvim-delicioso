@@ -48,16 +48,22 @@ return require('packer').startup(function(use)
 	}
 
   use {'tpope/vim-commentary'}
+
   use {'lukas-reineke/indent-blankline.nvim'}
+
   use {'mg979/vim-visual-multi'}
-	use { 'williamboman/mason.nvim' }
+
+  use { 'williamboman/mason.nvim' }
+
   use {'airblade/vim-gitgutter'}
+
   use {'editorconfig/editorconfig-vim'}
+
   use {'windwp/nvim-autopairs'}
+
   use {'APZelos/blamer.nvim', config = function ()
     vim.g.blamer_enabled = true
     vim.g.blamer_show_in_insert_modes = 0
-    vim.g.blamer_prefix = ' > '
   end}
   use {'github/copilot.vim'}
 end)
