@@ -49,13 +49,7 @@ return require('packer').startup(function(use)
 
   use {'tpope/vim-commentary'}
 
-  use {'lukas-reineke/indent-blankline.nvim'}
-
   use {'mg979/vim-visual-multi'}
-
-  use { 'williamboman/mason.nvim' }
-
-  use {'airblade/vim-gitgutter'}
 
   use {'editorconfig/editorconfig-vim'}
 
