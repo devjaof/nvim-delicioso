@@ -51,13 +51,24 @@ return require('packer').startup(function(use)
 
   use {'mg979/vim-visual-multi'}
 
+  use { 'williamboman/mason.nvim' }
+
+  use {'airblade/vim-gitgutter'}
+
   use {'editorconfig/editorconfig-vim'}
 
   use {'windwp/nvim-autopairs'}
+
+  use {'windwp/nvim-ts-autotag'}
 
   use {'APZelos/blamer.nvim', config = function ()
     vim.g.blamer_enabled = true
     vim.g.blamer_show_in_insert_modes = 0
   end}
+
   use {'github/copilot.vim'}
+
+  use {'jose-elias-alvarez/null-ls.nvim', requires = {'nvim-lua/plenary.nvim', 'neovim/nvim-lspconfig'}}
+  use {'MunifTanjim/prettier.nvim'}
+  use {'MunifTanjim/eslint.nvim'}
 end)
