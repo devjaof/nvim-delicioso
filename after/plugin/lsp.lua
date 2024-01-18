@@ -37,8 +37,7 @@ lspconfig.tailwindcss.setup({capabilities = lsp_capabilities})
 local null_ls = require('null-ls')
 
 local group = vim.api.nvim_create_augroup("lsp_format_on_save", { clear = false })
-local event = "BufWritePre" -- or "BufWritePost"
-local async = event == "BufWritePost"
+local event = "BufWritePre"
 
 null_ls.setup({
   on_attach = function(client, bufnr)
@@ -53,7 +52,7 @@ null_ls.setup({
         buffer = bufnr,
         group = group,
         callback = function()
-          vim.lsp.buf.format({ bufnr = bufnr, async = async })
+          vim.lsp.buf.format({ bufnr = bufnr, async = false })
         end,
         desc = "[lsp] format on save",
       })
@@ -84,22 +83,3 @@ prettier.setup({
 })
 
 
-local eslint = require('eslint')
-eslint.setup({
-  bin = 'eslint',
-  code_actions = {
-    enable = true,
-    apply_on_save = {
-      enable = true,
-    },
-    disable_rule_comment = {
-      enable = true,
-      location = "separate_line"
-    },
-  },
-  diagnostics = {
-    enable = true,
-    report_unused_disable_directives = false,
-    run_on = "save"
-  },
-})
