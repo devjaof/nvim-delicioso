@@ -1,35 +1,3 @@
-local cmp = require('cmp')
-local cmp_action = require('lsp-zero').cmp_action()
-
-cmp.setup({
-  snippet = {
-    expand = function(args)
-      require('luasnip').lsp_expand(args.body)
-    end,
-  }, 
-  mapping = cmp.mapping.preset.insert({
-    -- `Enter` key to confirm completion
-    ['<CR>'] = cmp.mapping.confirm({select = false}),
-    ['<CR>'] = cmp.mapping.confirm({select = true}),
-
-    -- Ctrl+Space to trigger completion menu
-    ['<C-Space>'] = cmp.mapping.complete(),
-
-    -- Navigate between snippet placeholder
-    ['<C-n>'] = cmp_action.luasnip_jump_forward(),
-    ['<C-p>'] = cmp_action.luasnip_jump_backward(),
-
-    -- Scroll up and down in the completion documentation
-    ['<C-u>'] = cmp.mapping.scroll_docs(-4),
-    ['<C-d>'] = cmp.mapping.scroll_docs(4),
-  }),
-  sources = {
-    { name = 'nvim_lsp' },
-    { name = 'luasnip' },
-    { name = 'buffer' },
-  },
-})
-
 local lspconfig = require('lspconfig')
 local lsp_capabilities = require('cmp_nvim_lsp').default_capabilities()
 
@@ -48,7 +16,6 @@ vim.api.nvim_create_autocmd('LspAttach', {
 	  vim.keymap.set("n", "<leader>vca", function() vim.lsp.buf.code_action() end, opts)
 	  vim.keymap.set("n", "<leader>vrr", function() vim.lsp.buf.references() end, opts)
 	  vim.keymap.set("n", "<leader>vrn", function() vim.lsp.buf.rename() end, opts)
-	  vim.keymap.set("i", "<C-h>", function() vim.lsp.buf.signature_help() end, opts)
   end
 })
 
@@ -61,13 +28,77 @@ lspconfig.tsserver.setup({
     "javascript", 
     "javascriptreact", 
     "javascript.jsx" 
-  }
+  },
+  cmd = { "typescript-language-server", "--stdio" },
 })
-lspconfig.eslint.setup({capabilities = lsp_capabilities})
+
 lspconfig.tailwindcss.setup({capabilities = lsp_capabilities})
 
-vim.api.nvim_create_autocmd('BufWritePre', {
-  pattern = { '*.tsx', '*.ts', '*.jsx', '*.js' },
-  command = 'silent! EslintFixAll',
-  group = vim.api.nvim_create_augroup('MyAutocmdsJavaScripFormatting', {}),
+local null_ls = require('null-ls')
+
+local group = vim.api.nvim_create_augroup("lsp_format_on_save", { clear = false })
+local event = "BufWritePre" -- or "BufWritePost"
+local async = event == "BufWritePost"
+
+null_ls.setup({
+  on_attach = function(client, bufnr)
+    if client.supports_method("textDocument/formatting") then
+      vim.keymap.set("n", "<Leader>f", function()
+        vim.lsp.buf.format({ bufnr = vim.api.nvim_get_current_buf() })
+      end, { buffer = bufnr, desc = "[lsp] format" })
+
+      -- format on save
+      vim.api.nvim_clear_autocmds({ buffer = bufnr, group = group })
+      vim.api.nvim_create_autocmd(event, {
+        buffer = bufnr,
+        group = group,
+        callback = function()
+          vim.lsp.buf.format({ bufnr = bufnr, async = async })
+        end,
+        desc = "[lsp] format on save",
+      })
+    end
+
+    if client.supports_method("textDocument/rangeFormatting") then
+      vim.keymap.set("x", "<Leader>f", function()
+        vim.lsp.buf.format({ bufnr = vim.api.nvim_get_current_buf() })
+      end, { buffer = bufnr, desc = "[lsp] format" })
+    end
+  end,
+})
+
+local prettier = require('prettier')
+prettier.setup({
+  bin = 'prettier',
+  filetype = {
+    "css",
+    "graphql",
+    "typescript",
+    "typescriptreact",
+    "javascript",
+    "javascriptreact",
+    "json",
+    "html",
+    "handlebars"
+  }
+})
+
+
+local eslint = require('eslint')
+eslint.setup({
+  bin = 'eslint',
+  code_actions = {
+    enable = true,
+    diagnostics = true,
+    apply_on_save = {
+      enable = true,
+      types = { "directive", "problem", "suggestion", "layout" }
+    }
+  },
+  diagnostics = {
+    enable = true,
+    report_unused_disable_directives = false,
+    run_on = "save"
+  },
+  diagnostics_format = "[eslint] #{m}\n(#{c})",
 })
