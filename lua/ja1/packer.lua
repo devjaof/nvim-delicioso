@@ -55,7 +55,7 @@ return require('packer').startup(function(use)
 
   use { 'williamboman/mason.nvim' }
 
-  use {'airblade/vim-gitgutter'}
+  use {'lewis6991/gitsigns.nvim'}
 
   use {'editorconfig/editorconfig-vim'}
 
@@ -73,4 +73,5 @@ return require('packer').startup(function(use)
   use {'jose-elias-alvarez/null-ls.nvim', requires = {'nvim-lua/plenary.nvim', 'neovim/nvim-lspconfig'}}
   use {'MunifTanjim/prettier.nvim'}
   use {'MunifTanjim/eslint.nvim'}
+  use {'romgrk/barbar.nvim', requires = {'kyazdani42/nvim-web-devicons', 'lewis6991/gitsigns.nvim'}}
 end)
