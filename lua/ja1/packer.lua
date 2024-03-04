@@ -23,7 +23,6 @@ return require('packer').startup(function(use)
 	use('nvim-treesitter/playground')
 	use('theprimeagen/harpoon')
 	use('mbbill/undotree')
-
 	use({
     		'kdheepak/lazygit.nvim',
     		-- optional for floating window border decoration
@@ -59,8 +58,6 @@ return require('packer').startup(function(use)
 
   use {'editorconfig/editorconfig-vim'}
 
-  use {'windwp/nvim-autopairs'}
-
   use {'windwp/nvim-ts-autotag'}
 
   use {'APZelos/blamer.nvim', config = function ()
@@ -71,8 +68,9 @@ return require('packer').startup(function(use)
   use {'github/copilot.vim'}
 
   use {'jose-elias-alvarez/null-ls.nvim', requires = {'nvim-lua/plenary.nvim', 'neovim/nvim-lspconfig'}}
-  use {'MunifTanjim/prettier.nvim'}
   use {'MunifTanjim/eslint.nvim'}
   use {'prichrd/netrw.nvim'}
   use {'nvim-tree/nvim-web-devicons'}
+  use {'jose-elias-alvarez/nvim-lsp-ts-utils'}
+  use {'JoosepAlviste/nvim-ts-context-commentstring'}
 end)
